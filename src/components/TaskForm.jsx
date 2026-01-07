@@ -15,7 +15,7 @@ import { DatePicker } from '@/components/ui/date-picker'
 import { TimePicker } from '@/components/ui/time-picker'
 import { Plus, X } from 'lucide-react'
 
-export function TaskForm({ onSubmit, categories, onAddCategory, initialData, onCancel }) {
+export function TaskForm({ onSubmit, categories, onAddCategory, initialData, onCancel, quickMode = false }) {
   const [formData, setFormData] = useState(initialData || {
     title: '',
     description: '',
@@ -67,18 +67,20 @@ export function TaskForm({ onSubmit, categories, onAddCategory, initialData, onC
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              placeholder="Add a description (optional)"
-              value={formData.description}
-              onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              rows={2}
-            />
-          </div>
+          {!quickMode && (
+            <div className="space-y-2">
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                placeholder="Add a description (optional)"
+                value={formData.description}
+                onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                rows={2}
+              />
+            </div>
+          )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className={`grid grid-cols-1 ${quickMode ? 'md:grid-cols-4' : 'md:grid-cols-2'} gap-4`}>
             <div className="space-y-2">
               <Label>Priority</Label>
               <Select

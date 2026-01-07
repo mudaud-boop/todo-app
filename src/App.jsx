@@ -7,7 +7,9 @@ import { TaskList } from './components/TaskList'
 import { FilterBar } from './components/FilterBar'
 import { Stats } from './components/Stats'
 import { Button } from '@/components/ui/button'
-import { Plus, CheckSquare, Bell, BellOff, Moon, Sun } from 'lucide-react'
+import { Plus, CheckSquare, Bell, BellOff, Moon, Sun, Calendar } from 'lucide-react'
+import { SlidePanel } from '@/components/ui/slide-panel'
+import { CalendarView } from './components/CalendarView'
 
 function App() {
   const {
@@ -35,18 +37,28 @@ function App() {
   const { theme, toggleTheme } = useTheme()
 
   const [showForm, setShowForm] = useState(false)
+  const [quickMode, setQuickMode] = useState(false)
+  const [showCalendar, setShowCalendar] = useState(false)
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b bg-card app-region-drag">
-        <div className="container max-w-4xl mx-auto px-4 py-6">
+      <header className="border-b bg-card app-region-drag shadow-sm">
+        <div className="container max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between app-region-no-drag">
             <div className="w-20" /> {/* Spacer for centering */}
-            <div className="flex items-center gap-3">
-              <CheckSquare className="h-8 w-8 text-primary" />
-              <h1 className="text-3xl font-bold tracking-tight">Mu's Todo's</h1>
+            <div className="flex items-center gap-2">
+              <CheckSquare className="h-7 w-7 text-primary" />
+              <h1 className="text-2xl font-semibold">Tick</h1>
             </div>
             <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowCalendar(true)}
+                title="Open calendar view"
+              >
+                <Calendar className="h-5 w-5" />
+              </Button>
               <Button
                 variant="ghost"
                 size="icon"
@@ -87,18 +99,39 @@ function App() {
               onSubmit={(data) => {
                 addTodo(data)
                 setShowForm(false)
+                setQuickMode(false)
               }}
-              onCancel={() => setShowForm(false)}
+              onCancel={() => {
+                setShowForm(false)
+                setQuickMode(false)
+              }}
+              quickMode={quickMode}
             />
           ) : (
-            <Button
-              onClick={() => setShowForm(true)}
-              className="w-full h-14 text-base"
-              variant="outline"
-            >
-              <Plus className="mr-2 h-5 w-5" />
-              Add New Task
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={() => {
+                  setQuickMode(true)
+                  setShowForm(true)
+                }}
+                className="flex-1 h-14 text-base"
+                variant="outline"
+              >
+                <Plus className="mr-2 h-5 w-5" />
+                Quick Task
+              </Button>
+              <Button
+                onClick={() => {
+                  setQuickMode(false)
+                  setShowForm(true)
+                }}
+                className="flex-1 h-14 text-base"
+                variant="outline"
+              >
+                <Plus className="mr-2 h-5 w-5" />
+                Full Task
+              </Button>
+            </div>
           )}
         </div>
 
@@ -121,6 +154,14 @@ function App() {
           onAddCategory={addCategory}
         />
       </main>
+
+      <SlidePanel
+        isOpen={showCalendar}
+        onClose={() => setShowCalendar(false)}
+        title="Calendar View"
+      >
+        <CalendarView todos={allTodos} onToggle={toggleComplete} />
+      </SlidePanel>
     </div>
   )
 }

@@ -44,7 +44,7 @@
   },
   "build": {
     "appId": "com.todoapp.app",
-    "productName": "Mu's Todos",
+    "productName": "Tick",
     "directories": {
       "output": "dist-electron"
     },
