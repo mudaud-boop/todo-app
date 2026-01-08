@@ -43,14 +43,14 @@ function App() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card app-region-drag shadow-sm">
-        <div className="container max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between app-region-no-drag">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
             <div className="w-20" /> {/* Spacer for centering */}
             <div className="flex items-center gap-2">
               <CheckSquare className="h-7 w-7 text-primary" />
               <h1 className="text-2xl font-semibold">Tick</h1>
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 app-region-no-drag">
               <Button
                 variant="ghost"
                 size="icon"
@@ -88,7 +88,7 @@ function App() {
         </div>
       </header>
 
-      <main className="container max-w-4xl mx-auto px-4 py-8">
+      <main className="container mx-auto px-6 py-8">
         <Stats stats={stats} />
 
         <div className="mb-6">

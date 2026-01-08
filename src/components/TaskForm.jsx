@@ -57,7 +57,7 @@ export function TaskForm({ onSubmit, categories, onAddCategory, initialData, onC
       <CardContent className="pt-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title">Task Title</Label>
+            <Label htmlFor="title">Task</Label>
             <Input
               id="title"
               placeholder="What needs to be done?"
